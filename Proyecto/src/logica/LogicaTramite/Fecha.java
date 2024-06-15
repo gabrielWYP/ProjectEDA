@@ -1,13 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package logica.LogicaTramite;
 
-/**
- *
- * @author gaway
- */
+import java.time.*;
+
 public class Fecha {
+    LocalDateTime ahora = LocalDateTime.now();
+
+    public Fecha() {
+        
+    }
+
+    public LocalDateTime getAhora() {
+        return ahora;
+    }
+
+    public void setAhora(LocalDateTime ahora) {
+        this.ahora = ahora;
+    }
+    
     
 }
