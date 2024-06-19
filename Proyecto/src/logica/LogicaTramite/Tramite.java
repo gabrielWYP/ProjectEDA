@@ -1,6 +1,7 @@
 
 package logica.LogicaTramite;
 import logica.Nodo;
+import logica.roles.Usuario;
 import logica.Lista;
 public class Tramite {
     private String UID, datos, asunto;
@@ -8,14 +9,16 @@ public class Tramite {
     private Documento ref;
     private Fecha inicio, fin;
     private Dependencia depe;
+    private Usuario usu;
     private Lista<String> eventos;
 
-    public Tramite(String UID, String datos, String asunto, int prio, Documento ref) {
+    public Tramite(String UID, String datos, String asunto, int prio, Documento ref, Usuario usu) {
         this.UID = UID;
         this.datos = datos;
         this.asunto = asunto;
         this.prio = prio;
         this.ref = ref;
+        this.usu = usu;
     }
 
     public String getUID() {
