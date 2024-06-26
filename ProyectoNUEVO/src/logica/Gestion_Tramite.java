@@ -26,10 +26,4 @@ public class Gestion_Tramite {
     }
     
     
-    public void anadirHistorial() {
-        
-    }
- 
-    
-    
 }

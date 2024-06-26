@@ -1,6 +1,5 @@
 
 package logica.LogicaTramite;
-import java.util.Scanner;
 import logica.*;
 
 public class Administrador {
@@ -43,7 +42,7 @@ public class Administrador {
 
     }
     
-    public void registrarMovimiento(boolean prio) {
+    public void registrarMovimiento(boolean prio, Dependencia Origen, Dependencia Final) {
         if (prio) {
             
         } else {
@@ -51,11 +50,22 @@ public class Administrador {
         }
     }
     
-    public void registrarFinal(String uid) {
+    public void registrarFinal(Gestion_Tramite sistema, Dependencia depe) {
+        Tramite fin = depe.getEncolados().desencolar();
+        String finalizo = "Evento ha finalizado satisfactoriamente en dependencia: " + depe;
+        fin.getEventos().agregar(finalizo);
+        sistema.getHistorial().agregar(fin);
+    }
+    
+    public void observarTramite(Gestion_Tramite sistema, Dependencia depe, String uid) {
         
     }
     
-    public void observarTramite() {
+    private void ordenarPrio(){
+        
+    }
+    
+    private void BuscarporUID(Cola<Tramite> nueva) {
         
     }
     
