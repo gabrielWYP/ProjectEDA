@@ -7,6 +7,7 @@ public class Fecha {
     LocalDateTime ahora = LocalDateTime.now();
 
     public Fecha() {
+        
     }
 
     public LocalDateTime getAhora() {
