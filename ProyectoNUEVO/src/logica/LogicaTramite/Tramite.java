@@ -90,4 +90,13 @@ public class Tramite {
         this.eventos = eventos;
     }
     
+    public String MostrarInfo() {
+        return "UID: " + UID + "\n" +
+               "Datos: " + datos + "\n" +
+                "Asunto: " + asunto + "\n" +
+                "Prio: " + prio + "\n";
+    }
+    
+    
+    
 }

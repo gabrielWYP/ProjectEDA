@@ -19,6 +19,24 @@ public class Lista<T> {
      True: si la lista es vacia
      False: Si la lista tiene elementos
      */
+
+    public Nodo<T> getCabeza() {
+        return cabeza;
+    }
+
+    public void setCabeza(Nodo<T> cabeza) {
+        this.cabeza = cabeza;
+    }
+
+    public Nodo<T> getUltimo() {
+        return ultimo;
+    }
+
+    public void setUltimo(Nodo<T> ultimo) {
+        this.ultimo = ultimo;
+    }
+    
+    
     public boolean esVacia() {
         if (cabeza == null) {
             return true;
