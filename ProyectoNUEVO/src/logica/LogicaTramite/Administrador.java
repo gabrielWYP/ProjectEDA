@@ -1,7 +1,6 @@
 
 package logica.LogicaTramite;
 import logica.*;
-
 public class Administrador {
     private String usuario;
     private String contrasena;
@@ -32,8 +31,8 @@ public class Administrador {
         sistema.getDepes().agregar(nueva);
     }
     
-    public void registrarIngreso(String uid, String datos, String asunto, int prio, Documento ref, Dependencia dep) {
-        Tramite nuevo = new Tramite(uid, datos,asunto, prio, ref);
+    public void registrarIngreso(Usuario datos, String asunto, int prio, Documento ref, Dependencia dep) {
+        Tramite nuevo = new Tramite(datos,asunto, prio, ref);
         Fecha ini = new Fecha();
         nuevo.setInicio(ini);
         nuevo.setDepe(dep);
