@@ -17,6 +17,7 @@ public class Fecha {
     public void setAhora(LocalDateTime ahora) {
         this.ahora = ahora;
     }
+    //Arrieta: Corregir clase fecha para obtener formato
     
     
 }

@@ -7,27 +7,31 @@ package views;
 import java.awt.Color;
 import javax.swing.JTextField;
 import java.awt.Font;
+import javax.swing.JOptionPane;
 
 
 public class InicioSesion extends javax.swing.JFrame {
 
-    /**
-     * Creates new form InicioSesion
-     */
+    private static final String USER_PLACEHOLDER = "Ingresar Usuario";
+    private static final String PASS_PLACEHOLDER = "Ingrese Contraseña";
+    
+    
     public InicioSesion() {
         initComponents();
         
-        AddPlaceHolder(text1);
-        AddPlaceHolder(text2);
+        AddPlaceHolder(text1, USER_PLACEHOLDER);
+        AddPlaceHolder(text2, PASS_PLACEHOLDER);
         
     }
     
-    public void AddPlaceHolder(JTextField textField)
+    
+    public void AddPlaceHolder(JTextField textField, String placeholder)
         {
             Font font = textField.getFont();
             font = font.deriveFont(Font.ITALIC);
             textField.setFont(font);
-            textField.setForeground(Color.gray);  
+            textField.setForeground(Color.gray);
+            textField.setText(placeholder);
             
         }
     
@@ -54,7 +58,8 @@ public class InicioSesion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         text1 = new javax.swing.JTextField();
         text2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Ingresar = new javax.swing.JButton();
+        Regresar = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -95,7 +100,19 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
+        Ingresar.setText("Ingresar");
+        Ingresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IngresarActionPerformed(evt);
+            }
+        });
+
+        Regresar.setText("Regresar");
+        Regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,31 +120,34 @@ public class InicioSesion extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(52, 52, 52)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(text2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(text2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(Ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(47, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(34, 34, 34)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(30, 30, 30)
                 .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(text2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,7 +175,7 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_text1ActionPerformed
 
     private void text1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_text1FocusGained
-     if(text1.getText().equals("Ingrese Usuario"))
+     if(text1.getText().equals(USER_PLACEHOLDER))
      {
          text1.setText("");
          RemovePlaceHolder(text1);
@@ -163,7 +183,7 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_text1FocusGained
 
     private void text2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_text2FocusGained
-      if(text2.getText().equals("Ingrese Contraseña"))
+      if(text2.getText().equals(PASS_PLACEHOLDER))
      {  
          text2.setText("");
          RemovePlaceHolder(text2);
@@ -173,22 +193,44 @@ public class InicioSesion extends javax.swing.JFrame {
     private void text1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_text1FocusLost
         if(text1.getText().isEmpty())
         {
-            AddPlaceHolder(text1);
-            text1.setText("Ingrese Usuario");
+            AddPlaceHolder(text1, USER_PLACEHOLDER);
         }
     }//GEN-LAST:event_text1FocusLost
 
     private void text2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_text2FocusLost
     if(text2.getText().isEmpty())
         {
-            AddPlaceHolder(text2);
-            text2.setText("Ingrese Contraseña");
+            AddPlaceHolder(text2,PASS_PLACEHOLDER);
         }
     }//GEN-LAST:event_text2FocusLost
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
        this.requestFocusInWindow();
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
+        String usuario = text1.getText();
+        String contraseña = text2.getText();
+        
+        if(!usuario.equals(USER_PLACEHOLDER) && !usuario.isEmpty() && !contraseña.equals(PASS_PLACEHOLDER) && !contraseña.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Bienvenido");
+            PestañaAdmin po = new PestañaAdmin();
+            po.setVisible(true);
+            this.dispose();
+        }
+        else
+        {
+                JOptionPane.showMessageDialog(null, "Falta un componente");   
+        }
+        
+    }//GEN-LAST:event_IngresarActionPerformed
+
+    private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
+        Inicio inicial = new Inicio();
+        inicial.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_RegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,7 +268,8 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Ingresar;
+    private javax.swing.JButton Regresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
