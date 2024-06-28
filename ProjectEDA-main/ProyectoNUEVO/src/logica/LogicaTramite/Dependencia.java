@@ -7,6 +7,8 @@ public class Dependencia {
 
     public Dependencia(String nombre) {
         this.nombre = nombre;
+        this.encolados = new Cola<>(); // Inicializar la cola
+
     }
 
     public String getNombre() {

@@ -10,12 +10,13 @@ public class Tramite {
     private Dependencia depe;
     private Lista<String> eventos;
 
-    public Tramite(String UID, String datos, String asunto, int prio, Documento ref) {
+    public Tramite(String UID, String datos, String asunto, int prio, Documento ref,Dependencia depe) {
         this.UID = UID;
         this.datos = datos;
         this.asunto = asunto;
         this.prio = prio;
         this.ref = ref;
+        this.depe=depe;
     }
 
     public String getUID() {

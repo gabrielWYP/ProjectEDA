@@ -16,11 +16,12 @@ public class main {
     }
     public static void main(String[] args) {
         Documento dni = new Documento("Hola", "Chau");
-        Tramite n1 = new Tramite("45", "Gabo", "Copia", 5, dni);
-        Tramite n2 = new Tramite("45", "Gabo", "Copia", 10, dni);
-        Tramite n3 = new Tramite("45", "Gabo", "Copia", 4, dni);
-        Tramite n4 = new Tramite("45", "Gabo", "Copia", 2, dni);
-        Tramite n5 = new Tramite("45", "Gabo", "Copia", 3, dni);
+        Dependencia depe= new Dependencia("gaaaaa");
+        Tramite n1 = new Tramite("45", "Gabo", "Copia", 5, dni,depe);
+        Tramite n2 = new Tramite("45", "Gabo", "Copia", 10, dni,depe);
+        Tramite n3 = new Tramite("45", "Gabo", "Copia", 4, dni,depe);
+        Tramite n4 = new Tramite("45", "Gabo", "Copia", 2, dni,depe);
+        Tramite n5 = new Tramite("45", "Gabo", "Copia", 3, dni,depe);
         
         Cola<Tramite> cola1 = new Cola<>();
         cola1.encolar(n1);
