@@ -2,16 +2,19 @@
 package logica.LogicaTramite;
 import logica.Nodo;
 import logica.Lista;
+import java.util.Random;
 public class Tramite {
-    private String UID, datos, asunto;
+    private String UID, asunto;
+    private Usuario datos;
     private int prio;
     private Documento ref;
     private Fecha inicio, fin;
     private Dependencia depe;
     private Lista<String> eventos;
 
-    public Tramite(String UID, String datos, String asunto, int prio, Documento ref,Dependencia depe) {
-        this.UID = UID;
+    public Tramite(Usuario datos, String asunto, int prio, Documento ref,Dependencia depe) {
+        Random rand = new Random();
+        this.UID = String.valueOf(rand.nextInt(1000-500+1));
         this.datos = datos;
         this.asunto = asunto;
         this.prio = prio;
@@ -27,11 +30,11 @@ public class Tramite {
         this.UID = UID;
     }
 
-    public String getDatos() {
+    public Usuario getDatos() {
         return datos;
     }
 
-    public void setDatos(String datos) {
+    public void setDatos(Usuario datos) {
         this.datos = datos;
     }
 

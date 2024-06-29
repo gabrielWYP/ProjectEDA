@@ -152,15 +152,21 @@ public class PestañaAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_FinalizarTraActionPerformed
 
     private void MoverTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoverTraActionPerformed
-        // TODO add your handling code here:
+       MoverTramite movTra = new MoverTramite();
+        movTra.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MoverTraActionPerformed
 
     private void VisualizarTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarTraActionPerformed
-        // TODO add your handling code here:
+      VisualizarTramite verTra = new VisualizarTramite();
+        verTra.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_VisualizarTraActionPerformed
 
     private void CrearDepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearDepActionPerformed
-        // TODO add your handling code here:
+     CrearDependencia iniDepe = new CrearDependencia();
+        iniDepe.setVisible(true);
+        this.dispose();   
     }//GEN-LAST:event_CrearDepActionPerformed
 
     /**

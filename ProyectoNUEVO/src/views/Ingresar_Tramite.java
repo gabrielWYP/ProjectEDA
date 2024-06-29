@@ -26,18 +26,28 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
     private static final String DOC_PLACEHOLDER = "ingresar documento";
     private Administrador admin = new Administrador("pepe", "1232");
     private Gestion_Tramite GT = new Gestion_Tramite();
+    
+    //Instancia de la clase Fecha
+    private Fecha fechaTramiteIni = new Fecha();
+    
+    //Creación de Usuarios de la clase(Uusario)
     Usuario usu1 = new Usuario("71959397", "Pep Guardiola", "934999712", "pepitoalcachofa@gmail.com");
     Usuario usu2 = new Usuario("83Usuario usu1 = new Usuario(\"71959397\", \"941832", "Ricardo Moran", "999 975 222", "pepitoalcachofa@gmail.com");
     Usuario usu3 = new Usuario("71959397", "Pepito lagapija", "934999712", "pepitoalcachofa@gmail.com");
     
+    //Creación de Documento de la clase(Documento)
     
+    Documento doc1 = new Documento("Registro DNI", "registro del DNI en la base de datos");
+    Documento doc2 = new Documento("Registro notas", "subir las notas del usuarios a la base de datos");
+    Documento doc3 = new Documento("Declaración Jurada", "documento firmado por una notaria asumiendo la responsabilidad del usuario");
     
     public Ingresar_Tramite() {
         initComponents();
         AddPlaceHolder(prioridad, PRIO_PLACEHOLDER);
         AddPlaceHolder(asunto, ASUN_PLACEHOLDER);
-        AddPlaceHolder(doc, DOC_PLACEHOLDER);
         llenarBoxUsuarios();
+        llenarBoxDependencias();
+        llenarBoxDocumentos();
     }
     
     
@@ -70,20 +80,32 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
           
       }
       
+      public void llenarBoxDocumentos()
+      {
+          docu.removeAllItems();
+          docu.addItem("Seleccionar Documento");
+          docu.addItem(doc1.getTipo());
+          docu.addItem(doc2.getTipo());
+          docu.addItem(doc3.getTipo());
+          
+      }
+      
       public void llenarBoxDependencias()
       {
           depe.removeAllItems();
           depe.addItem("Seleccionar Dependencia");
           
           Lista<Dependencia> nomDepe = GT.getDepes();
-          Nodo<Dependencia> ptr = nomDepe.getCabeza();
-          while(ptr != null)
-          {
-              depe.addItem(ptr.getElemento().getNombre());
-          }
           
+          if(nomDepe != null)
+          {
+            Nodo<Dependencia> ptr = nomDepe.getCabeza();
+            while(ptr != null)
+            {
+                depe.addItem(ptr.getElemento().getNombre());
+            }
+          }
       }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -96,13 +118,13 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         prioridad = new javax.swing.JTextField();
         asunto = new javax.swing.JTextField();
-        doc = new javax.swing.JTextField();
         Rellenar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         vaciarcampos = new javax.swing.JButton();
         usuario = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         depe = new javax.swing.JComboBox<>();
+        docu = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,15 +170,6 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
             }
         });
 
-        doc.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                docFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                docFocusLost(evt);
-            }
-        });
-
         Rellenar.setText("Rellenar");
         Rellenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,6 +204,8 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
         jLabel9.setToolTipText("");
 
         depe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        docu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,10 +243,10 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel9))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(asunto, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(doc, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(depe, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(asunto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                                    .addComponent(depe, javax.swing.GroupLayout.Alignment.LEADING, 0, 174, Short.MAX_VALUE)
+                                    .addComponent(docu, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(72, 72, 72))
         );
         layout.setVerticalGroup(
@@ -253,8 +268,8 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(doc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(docu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -276,17 +291,18 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
 
     private void RellenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RellenarActionPerformed
        String Prioridad = prioridad.getText();
+       int PrioInt = 0;
+       
+       if (Prioridad.matches("\\d+"))
+       {
+           PrioInt = Integer.parseInt(Prioridad);
+       }
+       
+       
        String Asunto = asunto.getText();
-       String Documento = doc.getText();
         
-       if(!Prioridad.equals(PRIO_PLACEHOLDER) && !Prioridad.isEmpty() &&
-               !Asunto.equals(ASUN_PLACEHOLDER) && !Asunto.isEmpty() &&
-               !Documento.equals(DOC_PLACEHOLDER) && !Documento.isEmpty()
-               )
-       {   
-            
-            String nombreUsu = usuario.getSelectedItem().toString();
-            Usuario usuarioSeleccionado = null;
+       String nombreUsu = usuario.getSelectedItem().toString();
+       Usuario usuarioSeleccionado = null;
             
             if(nombreUsu.equals(usu1.getNombre()))
             {
@@ -300,14 +316,65 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
             {
                 usuarioSeleccionado = usu3;
             }
-            //registrar ingreso 
+            
+       String TipoDoc = docu.getSelectedItem().toString();
+       Documento documentoSeleccionado = null;
+       
+       if(TipoDoc.equals(doc1.getTipo()))
+       {
+           documentoSeleccionado = doc1;
+       }
+       else if(TipoDoc.equals(doc2.getTipo()))
+       {
+           documentoSeleccionado = doc2;
+       }
+       else if(TipoDoc.equals(doc3.getTipo()))
+       {
+           documentoSeleccionado = doc3;
+       }
+            
+            
+            //Capturar dependencia del ComboBox multiple
+            
+            String nombreDep = depe.getSelectedItem().toString();
+            Dependencia dependenciaSeleccionada = null;
+            
+            
+            
+            Lista<Dependencia> listasDependencias = GT.getDepes();
+            if(dependenciaSeleccionada != null)
+                {
+                Nodo<Dependencia> nodoDependencia = listasDependencias.getCabeza();
+                while(nodoDependencia != null)
+                {
+                    if(nodoDependencia.getElemento().getNombre().equals(nombreDep))
+                    {
+                        dependenciaSeleccionada = nodoDependencia.getElemento();
+                        break;
+                    }
+                    nodoDependencia = nodoDependencia.getSgteNodo();
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "No hay dependencia registrada");
+            }
+       
+       if(!Prioridad.equals(PRIO_PLACEHOLDER) && !Prioridad.isEmpty() &&
+               !Asunto.equals(ASUN_PLACEHOLDER) && !Asunto.isEmpty() &&
+               dependenciaSeleccionada != null && usuarioSeleccionado != null 
+               && documentoSeleccionado != null)
+       {         
+           //Funcion tomada de Gestion_Tramite
+            admin.registrarIngreso(usuarioSeleccionado, Asunto, PrioInt, documentoSeleccionado, dependenciaSeleccionada);
            
-            
-            
             JOptionPane.showMessageDialog(null, "Se registro todo correctamente");
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            String formattedDateTime = LocalDateTime.now().format(formato);
-            JOptionPane.showMessageDialog(null, "Fecha del dia: " + formattedDateTime);
+            
+            //fecha formateada con la instancia de fecha
+            String fechaFTra = fechaTramiteIni.FechaFormateada("dd/MM/yyyy HH:mm:ss");
+            JOptionPane.showMessageDialog(null, "Fecha del dia: " + fechaFTra);
+            
+            //Termino de crear tramite
             PestañaAdmin po = new PestañaAdmin();
             po.setVisible(true);
             this.dispose();
@@ -341,14 +408,6 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
      }
     }//GEN-LAST:event_asuntoFocusGained
 
-    private void docFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_docFocusGained
-       if(doc.getText().equals(DOC_PLACEHOLDER));
-     {
-         doc.setText("");
-         RemovePlaceHolder(doc);
-     }
-    }//GEN-LAST:event_docFocusGained
-
     private void prioridadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_prioridadFocusLost
         if(prioridad.getText().isEmpty())
         {
@@ -362,13 +421,6 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
             AddPlaceHolder(asunto, ASUN_PLACEHOLDER);
         }
     }//GEN-LAST:event_asuntoFocusLost
-
-    private void docFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_docFocusLost
-       if(doc.getText().isEmpty())
-        {
-            AddPlaceHolder(doc, DOC_PLACEHOLDER);
-        }
-    }//GEN-LAST:event_docFocusLost
 
     private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
         
@@ -421,7 +473,7 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
     private javax.swing.JTextField asunto;
     private javax.swing.JButton cancelar;
     private javax.swing.JComboBox<String> depe;
-    private javax.swing.JTextField doc;
+    private javax.swing.JComboBox<String> docu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

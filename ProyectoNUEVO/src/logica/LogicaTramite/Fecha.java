@@ -2,12 +2,13 @@
 package logica.LogicaTramite;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class Fecha {
     LocalDateTime ahora = LocalDateTime.now();
 
     public Fecha() {
-        
+        this.ahora = LocalDateTime.now();
     }
 
     public LocalDateTime getAhora() {
@@ -17,7 +18,10 @@ public class Fecha {
     public void setAhora(LocalDateTime ahora) {
         this.ahora = ahora;
     }
-    //Arrieta: Corregir clase fecha para obtener formato
     
-    
+    public String FechaFormateada(String formato)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+        return ahora.format(formatter);
+    }
 }

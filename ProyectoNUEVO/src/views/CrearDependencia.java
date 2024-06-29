@@ -33,8 +33,8 @@ public class CrearDependencia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
+        crearDep = new javax.swing.JToggleButton();
+        CancelarOp = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,14 +49,19 @@ public class CrearDependencia extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("OK");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        crearDep.setText("Crear");
+        crearDep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                crearDepActionPerformed(evt);
             }
         });
 
-        jToggleButton2.setText("Cancelar");
+        CancelarOp.setText("Cancelar");
+        CancelarOp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarOpActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,9 +80,9 @@ public class CrearDependencia extends javax.swing.JFrame {
                 .addContainerGap(56, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(73, 73, 73)
-                .addComponent(jToggleButton2)
+                .addComponent(CancelarOp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(crearDep, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93))
         );
         layout.setVerticalGroup(
@@ -91,26 +96,33 @@ public class CrearDependencia extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jToggleButton2))
+                    .addComponent(crearDep)
+                    .addComponent(CancelarOp))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-         String nombreDependencia = jTextField1.getText(); // Obtener el texto ingresado
+    private void crearDepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearDepActionPerformed
+        
+        String nombreDependencia = jTextField1.getText(); // Obtener el texto ingresado
         Dependencia nuevaDependencia = new Dependencia(nombreDependencia); // Crear una nueva instancia de Dependencia
         // Aquí puedes agregar código para manejar la nueva dependencia creada, como guardarla en una lista o base de datos.
         System.out.println("Dependencia creada: " + nuevaDependencia.getNombre());
         JOptionPane.showMessageDialog(this,"Dependencia creada satisfactoriamente");
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_crearDepActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void CancelarOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarOpActionPerformed
+    JOptionPane.showMessageDialog(null, "Operación cancelada");
+    PestañaAdmin po = new PestañaAdmin();
+    po.setVisible(true);
+    this.dispose();    
+    }//GEN-LAST:event_CancelarOpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,10 +160,10 @@ public class CrearDependencia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton CancelarOp;
+    private javax.swing.JToggleButton crearDep;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }
