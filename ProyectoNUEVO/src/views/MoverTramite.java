@@ -5,12 +5,15 @@
 package views;
 
 import javax.swing.JOptionPane;
+import logica.LogicaTramite.Administrador;
 
 /**
  *
  * @author Maritza
  */
 public class MoverTramite extends javax.swing.JFrame {
+    
+    private Administrador admin = Administrador.getInstance();
 
     /**
      * Creates new form MoverTramite

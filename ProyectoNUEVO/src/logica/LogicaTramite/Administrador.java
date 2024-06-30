@@ -5,10 +5,12 @@ import logica.*;
 public class Administrador {
     private String usuario;
     private String contrasena;
+    private static Administrador instancia;
 
-    public Administrador(String usuario, String contrasena) {
+    private Administrador(String usuario, String contrasena) {
         this.usuario = usuario;
         this.contrasena = contrasena;
+        
     }
 
     public String getUsuario() {
@@ -26,22 +28,36 @@ public class Administrador {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+    
+     public static Administrador getInstance() {
+        if (instancia == null) {
+            instancia = new Administrador("admin","admin");
+        }
+        return instancia;
+    }
+    
+    
 
     public void crearDependencia(Gestion_Tramite sistema, String nomdep) {
         Dependencia nueva = new Dependencia(nomdep);
         sistema.getDepes().agregar(nueva);
     }
     
-    public void registrarIngreso(Usuario datos, String asunto, int prio, Documento ref, Dependencia dep) {
+    public Tramite registrarIngreso(Usuario datos, String asunto, int prio, Documento ref, Dependencia dep) {
         Tramite nuevo = new Tramite( datos,asunto, prio, ref,dep);
         Fecha ini = new Fecha();
         nuevo.setInicio(ini);
-        nuevo.setDepe(dep);
         String evento = "Se inicializa el tramite en dependencia " + dep;
         nuevo.getEventos().agregar(evento);
         dep.getEncolados().encolar(nuevo);
+        return nuevo;
     }
     
+    public void registrarUsuario(Gestion_Tramite sistema,String dni, String nombre, String fono, String email){
+        Usuario nuevo = new Usuario(dni,nombre,fono,email);
+        sistema.getUser().agregar(nuevo);
+        
+    }
     public void registrarMovimiento(boolean prio, Dependencia Origen, Dependencia Final) {
         Cola<Tramite> ordenar = Origen.getEncolados();
         if (prio) {

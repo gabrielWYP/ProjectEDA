@@ -20,6 +20,7 @@ public class Tramite {
         this.prio = prio;
         this.ref = ref;
         this.depe=depe;
+        this.eventos=new Lista<String>();
     }
 
     public String getUID() {

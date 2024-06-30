@@ -16,7 +16,7 @@ import logica.*;
  */
 public class depListas extends javax.swing.JFrame {
 
-    private Gestion_Tramite GT = new Gestion_Tramite();
+    private Gestion_Tramite GT = Gestion_Tramite.getInstance();
     
     DefaultTableModel m1 = new DefaultTableModel();
     

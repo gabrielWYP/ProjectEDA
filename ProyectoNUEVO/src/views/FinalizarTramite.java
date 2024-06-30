@@ -3,25 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package views;
-import javax.swing.JOptionPane;
-import logica.Gestion_Tramite;
+
 import logica.LogicaTramite.Administrador;
-import logica.LogicaTramite.Dependencia;
-
-
 
 /**
  *
- * @author Maritza
+ * @author gaway
  */
-public class CrearDependencia extends javax.swing.JFrame {
-
-    private Gestion_Tramite GT = Gestion_Tramite.getInstance();
-    private Administrador admin = Administrador.getInstance();
+public class FinalizarTramite extends javax.swing.JFrame {
     
-    public CrearDependencia() {
+    private Administrador admin = Administrador.getInstance();
+
+    /**
+     * Creates new form FinalizarTramite
+     */
+    public FinalizarTramite() {
         initComponents();
-  
     }
 
     /**
@@ -36,13 +33,15 @@ public class CrearDependencia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        crearDep = new javax.swing.JToggleButton();
-        CancelarOp = new javax.swing.JToggleButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
+        Rellenar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel1.setText("Crear Dependencia ");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("FINALIZAR TRAMITE");
 
         jLabel2.setText("Ingrese dependencia:");
 
@@ -52,17 +51,26 @@ public class CrearDependencia extends javax.swing.JFrame {
             }
         });
 
-        crearDep.setText("Crear");
-        crearDep.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton1.setText("Prioridad");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crearDepActionPerformed(evt);
+                jRadioButton1ActionPerformed(evt);
             }
         });
 
-        CancelarOp.setText("Regresar");
-        CancelarOp.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton2.setText("Antigüedad");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelarOpActionPerformed(evt);
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("¿Desea finalizar por prioridad o antigüedad?");
+
+        Rellenar.setText("FINALIZAR TRAMITE");
+        Rellenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RellenarActionPerformed(evt);
             }
         });
 
@@ -70,68 +78,66 @@ public class CrearDependencia extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(119, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(103, 103, 103))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(56, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(CancelarOp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(crearDep, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                            .addComponent(jLabel3)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Rellenar)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addGap(81, 81, 81)
+                                .addComponent(jRadioButton2)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(crearDep)
-                    .addComponent(CancelarOp))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2))
+                .addGap(27, 27, 27)
+                .addComponent(Rellenar)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void crearDepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearDepActionPerformed
-    String nombreDependencia = jTextField1.getText(); // Obtener el texto ingresado
-    //Dependencia nuevaDependencia = new Dependencia(nombreDependencia); // Crear una nueva instancia de Dependencia
-
-    // Obtener la instancia única de Gestion_Tramite y agregar la nueva dependencia
-    //GT.getDepes().agregar(nuevaDependencia);
-    admin.crearDependencia(GT, nombreDependencia);
-    JOptionPane.showMessageDialog(this, "Dependencia creada satisfactoriamente");
-
-    // Volver a la pestaña PestañaAdmin
-    PestañaAdmin po = new PestañaAdmin();
-    po.setVisible(true);
-    this.dispose(); 
-    }//GEN-LAST:event_crearDepActionPerformed
-
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void CancelarOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarOpActionPerformed
-    JOptionPane.showMessageDialog(null, "Operación cancelada");
-    PestañaAdmin po = new PestañaAdmin();
-    po.setVisible(true);
-    this.dispose();    
-    }//GEN-LAST:event_CancelarOpActionPerformed
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void RellenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RellenarActionPerformed
+       
+    }//GEN-LAST:event_RellenarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,29 +156,31 @@ public class CrearDependencia extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CrearDependencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinalizarTramite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CrearDependencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinalizarTramite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CrearDependencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinalizarTramite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CrearDependencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinalizarTramite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearDependencia().setVisible(true);
+                new FinalizarTramite().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton CancelarOp;
-    private javax.swing.JToggleButton crearDep;
+    private javax.swing.JButton Rellenar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

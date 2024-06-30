@@ -24,8 +24,8 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
     private static final String PRIO_PLACEHOLDER = "ingresar prioridad";;
     private static final String ASUN_PLACEHOLDER = "ingresar asunto";
     private static final String DOC_PLACEHOLDER = "ingresar documento";
-    private Administrador admin = new Administrador("pepe", "1232");
-    private Gestion_Tramite GT = new Gestion_Tramite();
+    private Administrador admin = Administrador.getInstance();
+    private Gestion_Tramite GT = Gestion_Tramite.getInstance();
     
     //Instancia de la clase Fecha
     private Fecha fechaTramiteIni = new Fecha();
@@ -70,17 +70,8 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
             
         }
       
-      public void llenarBoxUsuarios()
-      {
-          usuario.removeAllItems();
-          usuario.addItem("Seleccionar usuario");
-          usuario.addItem(usu1.getNombre());
-          usuario.addItem(usu2.getNombre());
-          usuario.addItem(usu3.getNombre());
-          
-      }
       
-      public void llenarBoxDocumentos()
+    public void llenarBoxDocumentos()
       {
           docu.removeAllItems();
           docu.addItem("Seleccionar Documento");
@@ -88,25 +79,40 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
           docu.addItem(doc2.getTipo());
           docu.addItem(doc3.getTipo());
           
-      }
+    }
       
-      public void llenarBoxDependencias()
-      {
-          depe.removeAllItems();
-          depe.addItem("Seleccionar Dependencia");
-          
-          Lista<Dependencia> nomDepe = GT.getDepes();
-          
-          if(nomDepe != null)
-          {
+    public void llenarBoxDependencias() {
+        depe.removeAllItems();
+        depe.addItem("Seleccionar Dependencia");
+
+        Lista<Dependencia> nomDepe = GT.getDepes();
+
+        if (nomDepe != null) {
             Nodo<Dependencia> ptr = nomDepe.getCabeza();
-            while(ptr != null)
-            {
+            while (ptr != null) {
                 depe.addItem(ptr.getElemento().getNombre());
+                ptr = ptr.getSgteNodo(); // Añadir esta línea para avanzar al siguiente nodo
             }
-          }
-      }
+        }
+    }
     
+    public void llenarBoxUsuarios() {
+        usuario.addItem("Seleccionar Dependencia");
+        usuario.removeAllItems();
+        
+
+        Lista<Usuario> users = GT.getUser();
+
+        if (users != null) {
+            Nodo<Usuario> ptr = users.getCabeza();
+            while (ptr != null) {
+                usuario.addItem(ptr.getElemento().getNombre());
+                System.out.println(ptr.getElemento().getNombre());
+                ptr = ptr.getSgteNodo(); // Añadir esta línea para avanzar al siguiente nodo
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -170,7 +176,7 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
             }
         });
 
-        Rellenar.setText("Rellenar");
+        Rellenar.setText("OK");
         Rellenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RellenarActionPerformed(evt);
@@ -184,7 +190,7 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
             }
         });
 
-        vaciarcampos.setText("Vaciar campos");
+        vaciarcampos.setText("Limpiar");
         vaciarcampos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vaciarcamposActionPerformed(evt);
@@ -290,102 +296,120 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
     }//GEN-LAST:event_vaciarcamposActionPerformed
 
     private void RellenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RellenarActionPerformed
-       String Prioridad = prioridad.getText();
-       int PrioInt = 0;
-       
-       if (Prioridad.matches("\\d+"))
-       {
-           PrioInt = Integer.parseInt(Prioridad);
-       }
-       
-       
-       String Asunto = asunto.getText();
-        
-       String nombreUsu = usuario.getSelectedItem().toString();
-       Usuario usuarioSeleccionado = null;
-            
-            if(nombreUsu.equals(usu1.getNombre()))
-            {
-                usuarioSeleccionado = usu1;
-            }
-            else if(nombreUsu.equals(usu2.getNombre()))
-            {
-                usuarioSeleccionado = usu2;
-            }
-            else if(nombreUsu.equals(usu3.getNombre()))
-            {
-                usuarioSeleccionado = usu3;
-            }
-            
-       String TipoDoc = docu.getSelectedItem().toString();
-       Documento documentoSeleccionado = null;
-       
-       if(TipoDoc.equals(doc1.getTipo()))
-       {
-           documentoSeleccionado = doc1;
-       }
-       else if(TipoDoc.equals(doc2.getTipo()))
-       {
-           documentoSeleccionado = doc2;
-       }
-       else if(TipoDoc.equals(doc3.getTipo()))
-       {
-           documentoSeleccionado = doc3;
-       }
-            
-            
-            //Capturar dependencia del ComboBox multiple
-            
-            String nombreDep = depe.getSelectedItem().toString();
-            Dependencia dependenciaSeleccionada = null;
-            
-            
-            
-            Lista<Dependencia> listasDependencias = GT.getDepes();
-            if(dependenciaSeleccionada != null)
-                {
-                Nodo<Dependencia> nodoDependencia = listasDependencias.getCabeza();
-                while(nodoDependencia != null)
-                {
-                    if(nodoDependencia.getElemento().getNombre().equals(nombreDep))
-                    {
-                        dependenciaSeleccionada = nodoDependencia.getElemento();
-                        break;
-                    }
-                    nodoDependencia = nodoDependencia.getSgteNodo();
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "No hay dependencia registrada");
-            }
-       
-       if(!Prioridad.equals(PRIO_PLACEHOLDER) && !Prioridad.isEmpty() &&
-               !Asunto.equals(ASUN_PLACEHOLDER) && !Asunto.isEmpty() &&
-               dependenciaSeleccionada != null && usuarioSeleccionado != null 
-               && documentoSeleccionado != null)
-       {         
-           //Funcion tomada de Gestion_Tramite
-            admin.registrarIngreso(usuarioSeleccionado, Asunto, PrioInt, documentoSeleccionado, dependenciaSeleccionada);
-           
-            JOptionPane.showMessageDialog(null, "Se registro todo correctamente");
-            
-            //fecha formateada con la instancia de fecha
-            String fechaFTra = fechaTramiteIni.FechaFormateada("dd/MM/yyyy HH:mm:ss");
-            JOptionPane.showMessageDialog(null, "Fecha del dia: " + fechaFTra);
-            
-            //Termino de crear tramite
-            PestañaAdmin po = new PestañaAdmin();
-            po.setVisible(true);
-            this.dispose();
-       }
-       else
-       {
-           JOptionPane.showMessageDialog(null, "Falta rellenar un apartado");
-       }
-           
+     String Prioridad = prioridad.getText();
+    int PrioInt = 0;
 
-       
+    if (Prioridad.matches("\\d+")) {
+        PrioInt = Integer.parseInt(Prioridad);
+    } else {
+        JOptionPane.showMessageDialog(null, "La prioridad debe ser un número.");
+        return;
+    }
+
+    String Asunto = asunto.getText();
+    if (Asunto == null || Asunto.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El asunto está vacío.");
+        return;
+    }
+
+    if (usuario.getSelectedItem() == null || usuario.getSelectedItem().toString().equals("Seleccionar Usuario")) {
+        JOptionPane.showMessageDialog(null, "No se ha seleccionado un usuario.");
+        return;
+    }
+
+    String nombreUsu = usuario.getSelectedItem().toString();
+    Usuario usuarioSeleccionado = null;
+
+    Lista<Usuario> usuarios = GT.getUser();
+    Nodo<Usuario> nodoUsuario = usuarios.getCabeza();
+
+    while (nodoUsuario != null) {
+        if (nodoUsuario.getElemento().getNombre().equals(nombreUsu)) {
+            usuarioSeleccionado = nodoUsuario.getElemento();
+            break;
+        }
+        nodoUsuario = nodoUsuario.getSgteNodo();
+    }
+
+    if (usuarioSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Usuario no seleccionado.");
+        return;
+    }
+
+    if (docu.getSelectedItem() == null || docu.getSelectedItem().toString().equals("Seleccionar Documento")) {
+        JOptionPane.showMessageDialog(null, "No se ha seleccionado un documento.");
+        return;
+    }
+
+    String TipoDoc = docu.getSelectedItem().toString();
+    Documento documentoSeleccionado = null;
+
+    if (TipoDoc.equals(doc1.getTipo())) {
+        documentoSeleccionado = doc1;
+    } else if (TipoDoc.equals(doc2.getTipo())) {
+        documentoSeleccionado = doc2;
+    } else if (TipoDoc.equals(doc3.getTipo())) {
+        documentoSeleccionado = doc3;
+    }
+
+    if (documentoSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Documento no seleccionado.");
+        return;
+    }
+
+    if (depe.getSelectedItem() == null || depe.getSelectedItem().toString().equals("Seleccionar Dependencia")) {
+        JOptionPane.showMessageDialog(null, "No se ha seleccionado una dependencia.");
+        return;
+    }
+
+    String nombreDep = depe.getSelectedItem().toString();
+    Dependencia dependenciaSeleccionada = null;
+
+    Lista<Dependencia> listasDependencias = GT.getDepes();
+    Nodo<Dependencia> nodoDependencia = listasDependencias.getCabeza();
+
+    while (nodoDependencia != null) {
+        if (nodoDependencia.getElemento().getNombre().equals(nombreDep)) {
+            dependenciaSeleccionada = nodoDependencia.getElemento();
+            break;
+        }
+        nodoDependencia = nodoDependencia.getSgteNodo();
+    }
+
+    if (dependenciaSeleccionada == null) {
+        JOptionPane.showMessageDialog(null, "Dependencia no seleccionada.");
+        return;
+    }
+
+    if (!Prioridad.isEmpty() && !Asunto.isEmpty() &&
+        dependenciaSeleccionada != null && usuarioSeleccionado != null &&
+        documentoSeleccionado != null) {         
+
+        // Función tomada de Gestion_Tramite
+        Tramite tramit = admin.registrarIngreso(usuarioSeleccionado, Asunto, PrioInt, documentoSeleccionado, dependenciaSeleccionada);
+        GT.getHistorial().agregar(tramit);
+        String fechaFTra = fechaTramiteIni.FechaFormateada("dd/MM/yyyy HH:mm:ss");
+        JOptionPane.showMessageDialog(null, "Se registró todo correctamente\n Fecha:" + fechaFTra);
+
+        // Imprimir los datos de todos los trámites
+        Lista<Tramite> tramites = GT.getHistorial();
+        Nodo<Tramite> nodoTramite = tramites.getCabeza();
+
+        while (nodoTramite != null) {
+            Tramite t = nodoTramite.getElemento();
+            System.out.println(t.MostrarInfo());;
+            System.out.println("-------------------------");
+            nodoTramite = nodoTramite.getSgteNodo();
+        }
+
+        // Termino de crear trámite
+        PestañaAdmin po = new PestañaAdmin();
+        po.setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(null, "Falta rellenar un apartado");
+    }
+
     }//GEN-LAST:event_RellenarActionPerformed
 
     private void prioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioridadActionPerformed

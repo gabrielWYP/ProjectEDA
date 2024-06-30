@@ -4,11 +4,14 @@
  */
 package views;
 
+import logica.LogicaTramite.Administrador;
+
 /**
  *
  * @author Maritza
  */
 public class BuscarTramite extends javax.swing.JFrame {
+    private Administrador admin = Administrador.getInstance();
 
     /**
      * Creates new form VisualizarTramite
