@@ -47,7 +47,7 @@ public class Administrador {
         Tramite nuevo = new Tramite( datos,asunto, prio, ref,dep);
         Fecha ini = new Fecha();
         nuevo.setInicio(ini);
-        String evento = "Se inicializa el tramite en dependencia " + dep;
+        String evento = "Se inicializa el tramite en dependencia: " + dep.getNombre();
         nuevo.getEventos().agregar(evento);
         dep.getEncolados().encolar(nuevo);
         return nuevo;
@@ -59,25 +59,31 @@ public class Administrador {
         
     }
     public void registrarMovimiento(boolean prio, Dependencia Origen, Dependencia Final) {
-        Cola<Tramite> ordenar = Origen.getEncolados();
         if (prio) {
-            Tramite mov = menorPrio(ordenar);
+            Tramite mov = menorPrio(Origen.getEncolados());
             String actu = "Tramite se ha movido de dependencia: " + Origen.getNombre() + "a dependencia: " + Final.getNombre();
             mov.getEventos().agregar(actu);
             Final.getEncolados().encolar(mov);
         } else {
-            Tramite mov = ordenar.desencolar();
+            Tramite mov = Origen.getEncolados().desencolar();
             String actu = "Tramite se ha movido de dependencia: " + Origen.getNombre() + "a dependencia: " + Final.getNombre();
             mov.getEventos().agregar(actu);
             Final.getEncolados().encolar(mov);
         }
     } //Corregir cambios en los parametros (no estan cambiando)
     
-    public void registrarFinal(Gestion_Tramite sistema, Dependencia depe) {
-        Tramite fin = depe.getEncolados().desencolar();
-        String finalizo = "Evento ha finalizado satisfactoriamente en dependencia: " + depe;
-        fin.getEventos().agregar(finalizo);
-        sistema.getHistorial().agregar(fin);
+    public void registrarFinal(boolean prio, Gestion_Tramite sistema, Dependencia depe) {
+        if (prio) {
+            Tramite fin = menorPrio(depe.getEncolados());
+            String finalizo = "Evento ha finalizado satisfactoriamente en dependencia: " + depe.getNombre();
+            fin.getEventos().agregar(finalizo);
+            sistema.getHistorial().agregar(fin);
+        } else {
+            Tramite fin = depe.getEncolados().desencolar();
+            String finalizo = "Evento ha finalizado satisfactoriamente en dependencia: " + depe.getNombre();
+            fin.getEventos().agregar(finalizo);
+            sistema.getHistorial().agregar(fin);
+        }
     }
     
     public void observarTramite(Gestion_Tramite sistema, String uid) {
@@ -117,7 +123,8 @@ public class Administrador {
         return menor.getElemento();
     }
     
-    private static Tramite BuscarporUID(Gestion_Tramite sistema, String uid) {
+    
+    public Tramite BuscarporUID(Gestion_Tramite sistema, String uid) {
         Lista<Dependencia> nueva = sistema.getDepes();
         Nodo<Dependencia> ptr = nueva.getCabeza();
         if(nueva.esVacia()) {
@@ -135,4 +142,57 @@ public class Administrador {
         }
         return null;
     } 
+    
+    public static Dependencia BuscarDepe(Gestion_Tramite sistema, String nombre) {
+        Dependencia dependenciaSeleccionada = null;
+        Lista<Dependencia> listasDependencias = sistema.getDepes();
+        Nodo<Dependencia> nodoDependencia = listasDependencias.getCabeza();
+        while (nodoDependencia != null) {
+            if (nodoDependencia.getElemento().getNombre().equals(nombre)) {
+                dependenciaSeleccionada = nodoDependencia.getElemento();
+                break;
+            }
+            nodoDependencia = nodoDependencia.getSgteNodo();
+        }
+        return dependenciaSeleccionada;
+    }
+    
+        /*
+     public Tramite BuscarporUID2(Gestion_Tramite sistema, String uid)
+     {
+        Lista<Dependencia> dependencias = sistema.getDepes();
+        Nodo<Dependencia> ptr = dependencias.getCabeza();
+        
+        
+        while(ptr != null)
+        {
+        
+            Cola<Tramite> encolados = ptr.getElemento().getEncolados();    
+        
+            Cola<Tramite> temp = new Cola<>();
+            boolean encontrado = false;
+        
+            while(!encolados.esVacia())
+            {
+                Tramite tramite = encolados.desencolar();
+                temp.encolar(tramite);
+                
+                if(tramite.getUID().equals(uid))
+                {
+                    encontrado = true;
+                    return tramite;
+                }
+            }
+        
+            while(!temp.esVacia())
+            {
+                encolados.encolar(temp.desencolar());
+            }
+            ptr = ptr.getSgteNodo();
+            
+        }
+        return null;
+    }
+    */
+    
 }

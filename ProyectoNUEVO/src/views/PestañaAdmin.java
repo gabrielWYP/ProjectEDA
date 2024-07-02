@@ -175,7 +175,9 @@ public class PestañaAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_ingresoTraActionPerformed
 
     private void FinalizarTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizarTraActionPerformed
-        // TODO add your handling code here:
+        FinalizarTramite fintra = new FinalizarTramite();
+        fintra.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_FinalizarTraActionPerformed
 
     private void MoverTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoverTraActionPerformed
@@ -185,8 +187,8 @@ public class PestañaAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_MoverTraActionPerformed
 
     private void VisualizarTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarTraActionPerformed
-      VisualizarTramite verTra = new VisualizarTramite();
-        verTra.setVisible(true);
+      IniBusqueda BusUID = new IniBusqueda();
+        BusUID.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_VisualizarTraActionPerformed
 

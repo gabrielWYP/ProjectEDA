@@ -6,7 +6,16 @@ package views;
 
 import javax.swing.JOptionPane;
 import logica.LogicaTramite.Administrador;
-
+import java.awt.Color;
+import java.awt.Font;
+import static java.time.LocalDateTime.now;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import logica.*;
+import logica.LogicaTramite.*;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import static logica.LogicaTramite.Administrador.BuscarDepe;
 /**
  *
  * @author Maritza
@@ -14,12 +23,14 @@ import logica.LogicaTramite.Administrador;
 public class MoverTramite extends javax.swing.JFrame {
     
     private Administrador admin = Administrador.getInstance();
-
+    private Gestion_Tramite GT = Gestion_Tramite.getInstance();
     /**
      * Creates new form MoverTramite
      */
     public MoverTramite() {
         initComponents();
+        llenarBoxDependenciasOrigen();
+        llenarBoxDependenciasFin();
     }
 
     /**
@@ -31,13 +42,17 @@ public class MoverTramite extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
+        DepeOrigen = new javax.swing.JComboBox<>();
+        DepeFin = new javax.swing.JComboBox<>();
+        RealizarCambio = new javax.swing.JToggleButton();
+        Cancelar = new javax.swing.JToggleButton();
+        jLabel4 = new javax.swing.JLabel();
+        prio = new javax.swing.JRadioButton();
+        antiguo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,55 +63,83 @@ public class MoverTramite extends javax.swing.JFrame {
 
         jLabel3.setText("Hasta:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Secretaria academica", "Direccion", "Recursos Humanos", "Profesores" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        DepeOrigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                DepeOrigenActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Secretaria academica", "Direccion", "Recursos Humanos", "Profesores" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        DepeFin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                DepeFinActionPerformed(evt);
             }
         });
 
-        jToggleButton1.setText("OK");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        RealizarCambio.setText("Mover Trámite");
+        RealizarCambio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                RealizarCambioActionPerformed(evt);
             }
         });
 
-        jToggleButton2.setText("Cancelar");
+        Cancelar.setText("Cancelar");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("¿Desea mover por prioridad o antigüedad?");
+
+        buttonGroup1.add(prio);
+        prio.setText("Prioridad");
+        prio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prioActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(antiguo);
+        antiguo.setText("Antigüedad");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(0, 121, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(DepeOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DepeFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(RealizarCambio)
+                        .addGap(54, 54, 54)
+                        .addComponent(Cancelar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(jToggleButton1)
-                        .addGap(103, 103, 103)
-                        .addComponent(jToggleButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(196, 196, 196)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(190, 190, 190))
+                        .addGap(26, 26, 26)
+                        .addComponent(prio)
+                        .addGap(18, 18, 18)
+                        .addComponent(antiguo)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,31 +149,93 @@ public class MoverTramite extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DepeOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DepeFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(prio)
+                    .addComponent(antiguo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jToggleButton2))
-                .addContainerGap(10, Short.MAX_VALUE))
+                    .addComponent(RealizarCambio)
+                    .addComponent(Cancelar))
+                .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public void llenarBoxDependenciasOrigen() {
+        DepeOrigen.removeAllItems();
+        DepeOrigen.addItem("Seleccionar Dependencia");
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        Lista<Dependencia> nomDepe = GT.getDepes();
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if (nomDepe != null) {
+            Nodo<Dependencia> ptr = nomDepe.getCabeza();
+            while (ptr != null) {
+                DepeOrigen.addItem(ptr.getElemento().getNombre());
+                ptr = ptr.getSgteNodo(); // Añadir esta línea para avanzar al siguiente nodo
+            }
+        }
+    }
+    public void llenarBoxDependenciasFin() {
+        DepeFin.removeAllItems();
+        DepeFin.addItem("Seleccionar Dependencia");
+
+        Lista<Dependencia> nomDepe = GT.getDepes();
+
+        if (nomDepe != null) {
+            Nodo<Dependencia> ptr = nomDepe.getCabeza();
+            while (ptr != null) {
+                DepeFin.addItem(ptr.getElemento().getNombre());
+                ptr = ptr.getSgteNodo(); // Añadir esta línea para avanzar al siguiente nodo
+            }
+        }
+    }
+    private void DepeOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepeOrigenActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_DepeOrigenActionPerformed
+
+    private void RealizarCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarCambioActionPerformed
+        //Buscamos las dependencias
+        String nombreDepOrigen = DepeOrigen.getSelectedItem().toString();
+        Dependencia Origen = BuscarDepe(GT, nombreDepOrigen);
+        String nombreDepFinal = DepeOrigen.getSelectedItem().toString();
+        Dependencia Final = BuscarDepe(GT, nombreDepFinal);
+        
+        if(Origen == null || Final == null) {
+            throw new RuntimeException("No existen las dependencias");
+        } else if (Origen.getNombre() == Final.getNombre()) {
+            throw new RuntimeException("No se puede encolar y desencolar entre dependencias");
+        } else {
+            boolean compro = false;
+            if (prio.isSelected()) {
+                compro = true;
+            }
+            admin.registrarMovimiento(compro, Origen, Final);
+        }
         JOptionPane.showMessageDialog(this, "Tramite movido satisfactoriamente");
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+        PestañaAdmin po = new PestañaAdmin();
+        po.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_RealizarCambioActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void DepeFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepeFinActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_DepeFinActionPerformed
+
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        PestañaAdmin po = new PestañaAdmin();
+        po.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_CancelarActionPerformed
+
+    private void prioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,12 +273,16 @@ public class MoverTramite extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JToggleButton Cancelar;
+    private javax.swing.JComboBox<String> DepeFin;
+    private javax.swing.JComboBox<String> DepeOrigen;
+    private javax.swing.JToggleButton RealizarCambio;
+    private javax.swing.JRadioButton antiguo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JRadioButton prio;
     // End of variables declaration//GEN-END:variables
 }

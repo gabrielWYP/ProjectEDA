@@ -13,6 +13,7 @@ import logica.*;
 import logica.LogicaTramite.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import static logica.LogicaTramite.Administrador.BuscarDepe;
 
 
 /**
@@ -61,7 +62,7 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
             
         }
     
-      public void RemovePlaceHolder(JTextField textField)
+    public void RemovePlaceHolder(JTextField textField)
         {
             Font font = textField.getFont();
             font = font.deriveFont(Font.PLAIN|Font.BOLD);
@@ -296,7 +297,8 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
     }//GEN-LAST:event_vaciarcamposActionPerformed
 
     private void RellenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RellenarActionPerformed
-     String Prioridad = prioridad.getText();
+    //Seleccion Prioridad
+    String Prioridad = prioridad.getText();
     int PrioInt = 0;
 
     if (Prioridad.matches("\\d+")) {
@@ -316,7 +318,8 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "No se ha seleccionado un usuario.");
         return;
     }
-
+    //Seleccion Usuario
+    
     String nombreUsu = usuario.getSelectedItem().toString();
     Usuario usuarioSeleccionado = null;
 
@@ -340,7 +343,8 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "No se ha seleccionado un documento.");
         return;
     }
-
+    //Seleccion Documentos
+    
     String TipoDoc = docu.getSelectedItem().toString();
     Documento documentoSeleccionado = null;
 
@@ -361,36 +365,27 @@ public class Ingresar_Tramite extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "No se ha seleccionado una dependencia.");
         return;
     }
-
+    //Seleccion Dependencias
+    
     String nombreDep = depe.getSelectedItem().toString();
-    Dependencia dependenciaSeleccionada = null;
-
-    Lista<Dependencia> listasDependencias = GT.getDepes();
-    Nodo<Dependencia> nodoDependencia = listasDependencias.getCabeza();
-
-    while (nodoDependencia != null) {
-        if (nodoDependencia.getElemento().getNombre().equals(nombreDep)) {
-            dependenciaSeleccionada = nodoDependencia.getElemento();
-            break;
-        }
-        nodoDependencia = nodoDependencia.getSgteNodo();
-    }
-
+    
+    Dependencia dependenciaSeleccionada = BuscarDepe(GT, nombreDep);
+    
     if (dependenciaSeleccionada == null) {
         JOptionPane.showMessageDialog(null, "Dependencia no seleccionada.");
         return;
     }
-
+    
+    //Realizar Ingreso
     if (!Prioridad.isEmpty() && !Asunto.isEmpty() &&
         dependenciaSeleccionada != null && usuarioSeleccionado != null &&
         documentoSeleccionado != null) {         
 
         // Función tomada de Gestion_Tramite
         Tramite tramit = admin.registrarIngreso(usuarioSeleccionado, Asunto, PrioInt, documentoSeleccionado, dependenciaSeleccionada);
-        GT.getHistorial().agregar(tramit);
         String fechaFTra = fechaTramiteIni.FechaFormateada("dd/MM/yyyy HH:mm:ss");
         JOptionPane.showMessageDialog(null, "Se registró todo correctamente\n Fecha:" + fechaFTra);
-
+        
         // Imprimir los datos de todos los trámites
         Lista<Tramite> tramites = GT.getHistorial();
         Nodo<Tramite> nodoTramite = tramites.getCabeza();
